@@ -1,2 +1,2 @@
 all:
-	clang client.c
+	clang client.c getch.c

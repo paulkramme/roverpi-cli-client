@@ -4,11 +4,12 @@
 #include<stdio.h>
 #include<string.h>
 #include<unistd.h> 
+#include"getch.h"
 
 int main(int argc,char **argv)
 {
     int sockfd, n;
-    char sendline[1];
+    char sendline[2];
     //char recvline[2];
     struct sockaddr_in servaddr;
  
@@ -26,10 +27,8 @@ int main(int argc,char **argv)
     {
         bzero( sendline, 2);
         fgets(sendline,2,stdin); /*stdin = 0 , for standard input */
- 
+	//sendline[0] = getch();
         write(sockfd,sendline,strlen(sendline)+1);
-        //read(sockfd,recvline,2);
-        //printf("%s",recvline);
     }
  
 }
