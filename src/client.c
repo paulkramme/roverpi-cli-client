@@ -29,7 +29,7 @@ SOFTWARE.
 #include<unistd.h> 
 #include"getch.h"
 
-int main(int argc,char *argv[])
+int main(void)
 {
 	int client_socket;
 	char sendline[256];
@@ -40,16 +40,15 @@ int main(int argc,char *argv[])
 	memset(&servaddr, '\0', sizeof(servaddr));
 	servaddr.sin_family = AF_INET;
 	servaddr.sin_port = htons(22000);
-	inet_pton(AF_INET, "127.0.0.1", &(servaddr.sin_addr));
+	inet_pton(AF_INET, "192.168.247.15", &(servaddr.sin_addr));
 	connect(client_socket, (struct sockaddr *) &servaddr, sizeof(servaddr));
 	while(1)
 	{
 		bzero( sendline, 256);
 		//fgets(sendline,2,stdin); /*stdin = 0 , for standard input */
-		input = getche();
+		input = getch();
 		sendline[0] = input;
 		write(client_socket, sendline, strlen(sendline)+1);
-		//write(sockfd, input, sizeof(input) + 1);
 	}
 }
 
