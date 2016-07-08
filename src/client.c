@@ -29,29 +29,27 @@ SOFTWARE.
 #include<unistd.h> 
 #include"getch.h"
 
-int main(int argc,char **argv)
+int main(int argc,char *argv[])
 {
-    int sockfd, n;
-    char sendline[2];
-    //char recvline[2];
-    struct sockaddr_in servaddr;
- 
-    sockfd=socket(AF_INET,SOCK_STREAM,0);
-    bzero(&servaddr,sizeof servaddr);
- 
-    servaddr.sin_family=AF_INET;
-    servaddr.sin_port=htons(22000);
- 
-    inet_pton(AF_INET,"192.168.247.15",&(servaddr.sin_addr));
- 
-    connect(sockfd,(struct sockaddr *)&servaddr,sizeof(servaddr));
- 
-    while(1)
-    {
-        bzero( sendline, 2);
-        fgets(sendline,2,stdin); /*stdin = 0 , for standard input */
-	//sendline[0] = getch();
-        write(sockfd,sendline,strlen(sendline)+1);
-    }
- 
+	int client_socket;
+	char sendline[256];
+	int input = 0;
+	struct sockaddr_in servaddr;
+	client_socket = socket(AF_INET, SOCK_STREAM, 0);
+	//bzero(&servaddr,sizeof servaddr);
+	memset(&servaddr, '\0', sizeof(servaddr));
+	servaddr.sin_family = AF_INET;
+	servaddr.sin_port = htons(22000);
+	inet_pton(AF_INET, "127.0.0.1", &(servaddr.sin_addr));
+	connect(client_socket, (struct sockaddr *) &servaddr, sizeof(servaddr));
+	while(1)
+	{
+		bzero( sendline, 256);
+		//fgets(sendline,2,stdin); /*stdin = 0 , for standard input */
+		input = getche();
+		sendline[0] = input;
+		write(client_socket, sendline, strlen(sendline)+1);
+		//write(sockfd, input, sizeof(input) + 1);
+	}
 }
+
