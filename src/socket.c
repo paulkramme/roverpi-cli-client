@@ -6,3 +6,7 @@ int test(void)
 	return 0;
 }
 
+int socket(void)
+{
+	return 0;
+}
